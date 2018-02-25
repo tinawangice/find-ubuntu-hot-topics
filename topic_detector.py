@@ -3,20 +3,23 @@ import re
 import string
 from nltk.corpus import stopwords
 
+
 def standard_words(word):
     remove = string.punctuation
     remove = remove.replace("-", "")  # don't remove hyphens
     pattern = r"[{}]".format(remove)  # create the pattern
     return re.sub(pattern, "", word)
 
-words=set()
-word_freq ={}
 
-tags =[]
+words = set()
+word_freq = {}
+
+tags = []
 with open("tags.txt", newline='') as all_tags:
     temp = csv.reader(all_tags, delimiter=',')
     for tag in temp:
-        tags+= tag
+        tags += tag
+
 
 def topic_detect(fn):
     topic = set()
@@ -27,12 +30,10 @@ def topic_detect(fn):
                 if word not in stopwords.words("english") and word in tags:
                     topic.add(word)
 
-    if topic ==[]:
+    if topic == []:
         print('No related topics found')
     else:
-        print('Topics Detected: '+ ', '.join(topic))
+        print('Topics Detected: ' + ', '.join(topic))
+
 
 topic_detect('5.tsv')
-
-
-
